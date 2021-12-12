@@ -7,22 +7,25 @@ Triangle (атрибуты: три точки, методы: нахождени�
 import random
 
 
-class Point:  # создается точка с рандомными координатами
-    def __init__(self):
-        self.axis_x =  random.randint(1, 10)
-        self.axis_y = random.randint(1, 10)
+class Point:
+    def __init__(self, x, y):
+        self.axis_x =  x
+        self.axis_y = y
 
 
 class Figure(Point):
-    def __init__(self,):
-        self.radius = Point
-        self.
+    def __init__(self):
+        point_1 = Point(1, 1)
+        point_2 = Point(8, 1)
+        point_3 = Point(1, 8)
+        point_4 = Point(8, 8)
+        point_mid = Point(4, 8)
 
 
 
 class Circle(Figure):
     def __init__(self, Point, radius):
-        self.center = Point
+        self.point = Point
         self.radius = radius
 
     def perimeter_circle(self): # нахождение периметра круга
@@ -36,7 +39,13 @@ class Circle(Figure):
 
 class Triangle(Figure):
     def __init__(self, point1, point2, point3):
-        self.point1 = Point
-        self.point2 = Point
-        self.point3 = Point
+        self.point1 = point1
+        self.point2 = point2
+        self.point3 = point3
 
+
+    def square_triangle(self):
+        side1 = self.axis_x
+
+
+if __name__ == "__main__":
