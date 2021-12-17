@@ -1,51 +1,80 @@
 """
-Создать класс Point, описывающий точку (атрибуты: x, y). Создать класс Figure.
-Создать три дочерних класса Circle (атрибуты: координаты центра, длина радиуса; методы: нахождение периметра и площади окружности),
-Triangle (атрибуты: три точки, методы: нахождение площади и периметра), Square (атрибуты: две точки, методы: нахождение площади и периметра).
-При потребности создавать все необходимые методы не описанные в задании.
+Создать класс Point, описывающий точку (атрибуты: x, y). Создать класс Figure. Создать три дочерних класса
+Circle (атрибуты: координаты центра, длина радиуса; методы: нахождение периметра и площади окружности),
+Triangle (атрибуты: три точки, методы: нахождение площади и периметра), Square (атрибуты: две точки, методы:
+нахождение площади и периметра). При потребности создавать все необходимые методы не описанные в задании.
 """
-import random
+
+import math
 
 
 class Point:
-    def __init__(self, x, y):
-        self.axis_x =  x
-        self.axis_y = y
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
 
 
-class Figure(Point):
-    def __init__(self):
-        point_1 = Point(1, 1)
-        point_2 = Point(8, 1)
-        point_3 = Point(1, 8)
-        point_4 = Point(8, 8)
-        point_mid = Point(4, 8)
+class Figure:
 
+    class Meta:
+        abstract = True
+
+    @staticmethod
+    def segment_length(a: Point, b: Point):
+        return math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)
+
+    def perimeter(self):
+        raise NotImplementedError
+
+    def area(self):
+        raise NotImplementedError
 
 
 class Circle(Figure):
-    def __init__(self, Point, radius):
-        self.point = Point
+    def __init__(self, a: Point, radius: int):
+        self.a = a
         self.radius = radius
 
-    def perimeter_circle(self): # нахождение периметра круга
-        perimeter_circle = 2 * self.radius * 3.14
-        return perimeter_circle
+    def perimeter(self):
+        return round(2 * math.pi * self.radius, 2)
 
-    def square_circle(self): # нахождение площади круга
-        square_circle = 3.14 * self.radius ** 2
-        return square_circle
+    def area(self):
+        return round(math.pi * (self.radius ** 2), 2)
 
 
 class Triangle(Figure):
-    def __init__(self, point1, point2, point3):
-        self.point1 = point1
-        self.point2 = point2
-        self.point3 = point3
+    def __init__(self, a: Point, b: Point, c: Point):
+        self.a = a
+        self.b = b
+        self.c = c
+
+        # Calculate segments length using points
+        self.segment_1 = self.segment_length(self.a, self.b)
+        self.segment_2 = self.segment_length(self.b, self.c)
+        self.segment_3 = self.segment_length(self.c, self.a)
+
+    def perimeter(self):
+        return round(self.segment_1 + self.segment_2 + self.segment_3, 2)
+
+    def area(self):
+        # Use Heron's Formula to calculate triangle area
+        half_pr = self.perimeter() / 2
+        return round(math.sqrt(
+            half_pr * (half_pr - self.segment_1) * (half_pr - self.segment_2) * (half_pr - self.segment_3)
+        ), 2)
 
 
-    def square_triangle(self):
-        side1 = self.axis_x
+class Square(Figure):
+    def __init__(self, a: Point, b: Point):
+        self.a = a
+        self.b = b
 
+        # Calculate segments length using points
+        self.segment_1 = abs(self.a.x - self.b.x)
+        self.segment_2 = abs(self.a.y - self.b.y)
 
-if __name__ == "__main__":
+    def perimeter(self):
+        return round((self.segment_1 + self.segment_2) * 2, 2)
+
+    def area(self):
+        return round(self.segment_1 * self.segment_2, 2
