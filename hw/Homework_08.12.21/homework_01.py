@@ -77,4 +77,4 @@ class Square(Figure):
         return round((self.segment_1 + self.segment_2) * 2, 2)
 
     def area(self):
-        return round(self.segment_1 * self.segment_2, 2
+        return round(self.segment_1 * self.segment_2, 2)
